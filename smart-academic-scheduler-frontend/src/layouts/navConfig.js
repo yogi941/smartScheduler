@@ -1,0 +1,15 @@
+export const navItems = [
+  { label: 'Overview', path: '/dashboard', icon: '📊', roles: ['STUDENT', 'TEACHER', 'ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Timetables', path: '/dashboard/timetables', icon: '📅', roles: ['STUDENT', 'TEACHER', 'ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Departments', path: '/dashboard/departments', icon: '🏢', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Courses', path: '/dashboard/courses', icon: '🎓', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Semesters', path: '/dashboard/semesters', icon: '📆', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Subjects', path: '/dashboard/subjects', icon: '📚', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Teachers', path: '/dashboard/teachers', icon: '👨‍🏫', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Student Batches', path: '/dashboard/student-batches', icon: '👥', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Rooms', path: '/dashboard/rooms', icon: '🚪', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Laboratories', path: '/dashboard/laboratories', icon: '🔬', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Time Slots', path: '/dashboard/time-slots', icon: '⏰', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Constraints', path: '/dashboard/constraints', icon: '⚙️', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Users', path: '/dashboard/users', icon: '👤', roles: ['ADMIN', 'SUPER_ADMIN'] },
+];
