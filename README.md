@@ -344,14 +344,3 @@ Feel free to check the [issues page](https://github.com/yogi941/smartScheduler/i
 
 ---
 
-## 📜 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-<div align="center">
-  <p>Crafted with ❤️ for Higher Education Institutions & Academic Communities</p>
-  <p><strong>© 2026 Smart Academic Scheduler Team</strong></p>
-</div>
-
