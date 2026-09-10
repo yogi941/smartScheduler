@@ -1,7 +1,9 @@
+const http = require('http');
 const env = require('./src/config/env');
 const logger = require('./src/config/logger');
 const app = require('./src/app');
 const { initializeDatabase, closeDatabaseConnection } = require('./src/database/connection');
+const { initSocket } = require('./src/services/socket.service');
 
 let server;
 
@@ -48,7 +50,10 @@ async function startServer() {
   try {
     await initializeDatabase();
 
-    server = app.listen(env.port, () => {
+    server = http.createServer(app);
+    initSocket(server);
+
+    server.listen(env.port, () => {
       logger.info(`${env.appName} server running in ${env.nodeEnv} mode on port ${env.port}`);
       logger.info(`API base URL: http://localhost:${env.port}${env.apiPrefix}`);
       logger.info(`Health check: http://localhost:${env.port}/health`);

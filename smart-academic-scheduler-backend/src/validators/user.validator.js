@@ -1,6 +1,6 @@
 const { body } = require('express-validator');
-const { USER_ROLES } = require('../constants/appConstants');
 const mongoose = require('mongoose');
+const { USER_ROLES } = require('../constants/appConstants');
 
 const createUserValidator = [
   body('name')
@@ -46,7 +46,9 @@ const updateUserValidator = [
     .optional()
     .custom((value) => mongoose.Types.ObjectId.isValid(value))
     .withMessage('department must be a valid MongoDB ObjectId'),
-  body('phone').optional().matches(/^[0-9]{10}$/),
+  body('phone')
+    .optional()
+    .matches(/^[0-9]{10}$/),
   body('isActive').optional().isBoolean(),
 ];
 

@@ -13,17 +13,14 @@ router.use(protect);
 router.get('/', paginationValidator, validate, timetableController.list);
 router.get('/:id', validateObjectId('id'), validate, timetableController.getById);
 router.get(
-  '/:id/export/pdf',
+  '/:id/versions',
   validateObjectId('id'),
   validate,
-  timetableController.exportPdf
+  timetableController.getVersionHistory
 );
-router.get(
-  '/:id/export/excel',
-  validateObjectId('id'),
-  validate,
-  timetableController.exportExcel
-);
+router.get('/:id/export/pdf', validateObjectId('id'), validate, timetableController.exportPdf);
+router.get('/:id/export/excel', validateObjectId('id'), validate, timetableController.exportExcel);
+router.get('/:id/export/csv', validateObjectId('id'), validate, timetableController.exportCsv);
 
 router.post(
   '/generate',
@@ -31,6 +28,22 @@ router.post(
   generateTimetableValidator,
   validate,
   timetableController.generate
+);
+
+router.put(
+  '/:id/move-entry',
+  authorize(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
+  validateObjectId('id'),
+  validate,
+  timetableController.moveEntry
+);
+
+router.post(
+  '/:id/rollback',
+  authorize(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
+  validateObjectId('id'),
+  validate,
+  timetableController.rollback
 );
 
 router.patch(

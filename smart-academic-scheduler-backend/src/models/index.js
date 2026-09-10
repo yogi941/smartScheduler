@@ -10,6 +10,7 @@ const StudentBatch = require('./StudentBatch.model');
 const TimeSlot = require('./TimeSlot.model');
 const Constraint = require('./Constraint.model');
 const Timetable = require('./Timetable.model');
+const AuditLog = require('./AuditLog.model');
 
 module.exports = {
   User,
@@ -24,4 +25,5 @@ module.exports = {
   TimeSlot,
   Constraint,
   Timetable,
+  AuditLog,
 };

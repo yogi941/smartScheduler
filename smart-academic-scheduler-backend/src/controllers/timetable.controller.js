@@ -5,6 +5,7 @@ const timetableService = require('../services/timetable.service');
 const { Timetable } = require('../models');
 const { generateTimetablePdf } = require('../export/timetablePdfExporter');
 const { generateTimetableExcel } = require('../export/timetableExcelExporter');
+const { generateTimetableCsv } = require('../export/timetableCsvExporter');
 
 const EXPORT_POPULATE_PATHS = [
   'batch',
@@ -55,19 +56,13 @@ const getById = asyncHandler(async (req, res) => {
   return ApiResponse.ok(res, doc, 'Timetable fetched successfully');
 });
 
-/**
- * POST /timetables/generate
- * Runs the full scheduling engine pipeline (conflict graph -> priority
- * queue -> greedy coloring -> backtracking -> room allocation) and
- * persists one Timetable per requested batch.
- */
 const generate = asyncHandler(async (req, res) => {
   const { batchIds, academicYear } = req.body;
 
   const result = await timetableService.generate({
     batchIds,
     academicYear,
-    createdBy: req.user.id,
+    createdBy: req.user._id || req.user.id,
   });
 
   const message =
@@ -79,41 +74,56 @@ const generate = asyncHandler(async (req, res) => {
 });
 
 const publish = asyncHandler(async (req, res) => {
-  const doc = await timetableService.publish(req.params.id);
+  const doc = await timetableService.publish(req.params.id, req.user);
   return ApiResponse.ok(res, doc, 'Timetable published successfully');
 });
 
 const archive = asyncHandler(async (req, res) => {
-  const doc = await timetableService.archive(req.params.id);
+  const doc = await timetableService.archive(req.params.id, req.user);
   return ApiResponse.ok(res, doc, 'Timetable archived successfully');
 });
 
-/**
- * GET /timetables/:id/export/pdf
- */
+const moveEntry = asyncHandler(async (req, res) => {
+  const doc = await timetableService.moveEntry(req.params.id, req.body, req.user);
+  return ApiResponse.ok(res, doc, 'Timetable entry moved successfully');
+});
+
+const rollback = asyncHandler(async (req, res) => {
+  const doc = await timetableService.rollback(req.params.id, req.body, req.user);
+  return ApiResponse.ok(
+    res,
+    doc,
+    `Timetable successfully rolled back to version ${req.body.targetVersion}`
+  );
+});
+
+const getVersionHistory = asyncHandler(async (req, res) => {
+  const history = await timetableService.getVersionHistory(req.params.id);
+  return ApiResponse.ok(res, history, 'Timetable version history fetched');
+});
+
 const exportPdf = asyncHandler(async (req, res) => {
   const timetable = await loadPopulatedTimetableForExport(req.params.id);
   const pdfBuffer = await generateTimetablePdf(timetable);
 
-  const fileName = `timetable-${timetable.batch?.batchName || timetable.id}-v${timetable.version}.pdf`
-    .replace(/\s+/g, '-')
-    .toLowerCase();
+  const fileName =
+    `timetable-${timetable.batch?.batchName || timetable.id}-v${timetable.version}.pdf`
+      .replace(/\s+/g, '-')
+      .toLowerCase();
 
   res.setHeader('Content-Type', 'application/pdf');
   res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
   return res.send(pdfBuffer);
 });
 
-/**
- * GET /timetables/:id/export/excel
- */
 const exportExcel = asyncHandler(async (req, res) => {
   const timetable = await loadPopulatedTimetableForExport(req.params.id);
   const excelBuffer = await generateTimetableExcel(timetable);
 
-  const fileName = `timetable-${timetable.batch?.batchName || timetable.id}-v${timetable.version}.xlsx`
-    .replace(/\s+/g, '-')
-    .toLowerCase();
+  const fileName =
+    `timetable-${timetable.batch?.batchName || timetable.id}-v${timetable.version}.xlsx`
+      .replace(/\s+/g, '-')
+      .toLowerCase();
 
   res.setHeader(
     'Content-Type',
@@ -123,4 +133,30 @@ const exportExcel = asyncHandler(async (req, res) => {
   return res.send(excelBuffer);
 });
 
-module.exports = { list, getById, generate, publish, archive, exportPdf, exportExcel };
+const exportCsv = asyncHandler(async (req, res) => {
+  const timetable = await loadPopulatedTimetableForExport(req.params.id);
+  const csvContent = generateTimetableCsv(timetable);
+
+  const fileName =
+    `timetable-${timetable.batch?.batchName || timetable.id}-v${timetable.version}.csv`
+      .replace(/\s+/g, '-')
+      .toLowerCase();
+
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+  return res.send(csvContent);
+});
+
+module.exports = {
+  list,
+  getById,
+  generate,
+  publish,
+  archive,
+  moveEntry,
+  rollback,
+  getVersionHistory,
+  exportPdf,
+  exportExcel,
+  exportCsv,
+};

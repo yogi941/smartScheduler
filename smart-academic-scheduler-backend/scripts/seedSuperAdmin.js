@@ -55,7 +55,9 @@ async function seedSuperAdmin() {
   try {
     const existingByEmail = await User.findOne({ email: email.toLowerCase().trim() });
     if (existingByEmail) {
-      logger.warn(`A user with email "${email}" already exists (role: ${existingByEmail.role}). No action taken.`);
+      logger.warn(
+        `A user with email "${email}" already exists (role: ${existingByEmail.role}). No action taken.`
+      );
       return;
     }
 
@@ -75,8 +77,12 @@ async function seedSuperAdmin() {
       isActive: true,
     });
 
-    logger.info(`SUPER_ADMIN account created successfully: ${superAdmin.email} (id: ${superAdmin._id})`);
-    logger.info('You can now log in via POST /api/v1/auth/login and use this account to create ADMIN/TEACHER users via POST /api/v1/users.');
+    logger.info(
+      `SUPER_ADMIN account created successfully: ${superAdmin.email} (id: ${superAdmin._id})`
+    );
+    logger.info(
+      'You can now log in via POST /api/v1/auth/login and use this account to create ADMIN/TEACHER users via POST /api/v1/users.'
+    );
   } catch (error) {
     logger.error(`Failed to seed SUPER_ADMIN: ${error.message}\n${error.stack}`);
     process.exitCode = 1;

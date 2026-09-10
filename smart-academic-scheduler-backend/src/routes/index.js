@@ -12,6 +12,9 @@ const timeSlotRoutes = require('./timeSlot.routes');
 const constraintRoutes = require('./constraint.routes');
 const timetableRoutes = require('./timetable.routes');
 const userRoutes = require('./user.routes');
+const auditLogRoutes = require('./auditLog.routes');
+const importRoutes = require('./import.routes');
+const analyticsRoutes = require('./analytics.routes');
 
 const router = express.Router();
 
@@ -28,5 +31,8 @@ router.use('/time-slots', timeSlotRoutes);
 router.use('/constraints', constraintRoutes);
 router.use('/timetables', timetableRoutes);
 router.use('/users', userRoutes);
+router.use('/audit-logs', auditLogRoutes);
+router.use('/import', importRoutes);
+router.use('/analytics', analyticsRoutes);
 
 module.exports = router;

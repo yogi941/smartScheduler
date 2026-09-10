@@ -2,11 +2,7 @@ const bcrypt = require('bcryptjs');
 const ApiError = require('../utils/ApiError');
 const env = require('../config/env');
 const { USER_ROLES } = require('../constants/appConstants');
-const {
-  generateAccessToken,
-  generateRefreshToken,
-  verifyRefreshToken,
-} = require('../utils/jwt');
+const { generateAccessToken, generateRefreshToken, verifyRefreshToken } = require('../utils/jwt');
 const userRepository = require('../repositories/user.repository');
 
 function buildTokenPayload(user) {

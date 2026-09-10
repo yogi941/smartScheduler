@@ -11,9 +11,7 @@ async function validateAppliesTo(data) {
   }
 
   if (!APPLIES_TO_MODELS.includes(data.appliesToModel)) {
-    throw ApiError.badRequest(
-      `appliesToModel must be one of: ${APPLIES_TO_MODELS.join(', ')}`
-    );
+    throw ApiError.badRequest(`appliesToModel must be one of: ${APPLIES_TO_MODELS.join(', ')}`);
   }
 
   const TargetModel = mongoose.model(data.appliesToModel);

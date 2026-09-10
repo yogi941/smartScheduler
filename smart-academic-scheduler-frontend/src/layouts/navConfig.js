@@ -1,5 +1,6 @@
 export const navItems = [
   { label: 'Overview', path: '/dashboard', icon: '📊', roles: ['STUDENT', 'TEACHER', 'ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Analytics & Workload', path: '/dashboard/analytics', icon: '📈', roles: ['ADMIN', 'SUPER_ADMIN'] },
   { label: 'Timetables', path: '/dashboard/timetables', icon: '📅', roles: ['STUDENT', 'TEACHER', 'ADMIN', 'SUPER_ADMIN'] },
   { label: 'Departments', path: '/dashboard/departments', icon: '🏢', roles: ['ADMIN', 'SUPER_ADMIN'] },
   { label: 'Courses', path: '/dashboard/courses', icon: '🎓', roles: ['ADMIN', 'SUPER_ADMIN'] },
@@ -11,5 +12,6 @@ export const navItems = [
   { label: 'Laboratories', path: '/dashboard/laboratories', icon: '🔬', roles: ['ADMIN', 'SUPER_ADMIN'] },
   { label: 'Time Slots', path: '/dashboard/time-slots', icon: '⏰', roles: ['ADMIN', 'SUPER_ADMIN'] },
   { label: 'Constraints', path: '/dashboard/constraints', icon: '⚙️', roles: ['ADMIN', 'SUPER_ADMIN'] },
+  { label: 'Audit Logs', path: '/dashboard/audit-logs', icon: '🛡️', roles: ['ADMIN', 'SUPER_ADMIN'] },
   { label: 'Users', path: '/dashboard/users', icon: '👤', roles: ['ADMIN', 'SUPER_ADMIN'] },
 ];

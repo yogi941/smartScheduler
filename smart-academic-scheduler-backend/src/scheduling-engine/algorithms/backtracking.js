@@ -72,7 +72,9 @@ function backtrackAssign({
     const conflictingVertices = conflictingIds.map((id) => vertexMap.get(id));
     const savedColors = conflictingVertices.map((v) => assignment.get(v.id));
 
-    conflictingVertices.forEach((v, idx) => releaseColor(v, savedColors[idx], assignment, registry));
+    conflictingVertices.forEach((v, idx) =>
+      releaseColor(v, savedColors[idx], assignment, registry)
+    );
 
     const nextReserved = new Set(reserved);
     nextReserved.add(color.colorKey);

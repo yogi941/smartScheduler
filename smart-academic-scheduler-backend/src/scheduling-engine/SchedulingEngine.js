@@ -3,12 +3,19 @@ const { buildConflictGraph } = require('./graph/ConflictGraph');
 const { buildVertices } = require('./builders/vertexBuilder');
 const { buildColorPalette } = require('./builders/colorBuilder');
 const { buildConstraintIndex } = require('./builders/constraintIndexBuilder');
-const { greedyColorGraph } = require('./algorithms/greedyColoring');
+const { dsaturColorGraph } = require('./algorithms/dsaturColoring');
 const { backtrackAssign } = require('./algorithms/backtracking');
 const ScheduleRegistry = require('./dataStructures/ScheduleRegistry');
 const ApiError = require('../utils/ApiError');
 
-function assignPhysicalResources({ vertices, assignment, rooms, laboratories, registry, batchMap }) {
+function assignPhysicalResources({
+  vertices,
+  assignment,
+  rooms,
+  laboratories,
+  registry,
+  batchMap,
+}) {
   const failures = [];
 
   vertices.forEach((vertex) => {
@@ -21,7 +28,8 @@ function assignPhysicalResources({ vertices, assignment, rooms, laboratories, re
     const pool = vertex.slotType === 'LAB' ? laboratories : rooms;
     const resource = pool.find(
       (candidate) =>
-        candidate.capacity >= batch.strength && registry.isRoomFree(candidate._id.toString(), color.colorKey)
+        candidate.capacity >= batch.strength &&
+        registry.isRoomFree(candidate._id.toString(), color.colorKey)
     );
 
     if (!resource) {
@@ -103,7 +111,7 @@ async function generateTimetables({ batchIds, academicYear, createdBy }) {
   const graph = buildConflictGraph(vertices);
   const registry = new ScheduleRegistry();
 
-  const { assignment, unresolved } = greedyColorGraph({
+  const { assignment, unresolved } = dsaturColorGraph({
     vertices,
     graph,
     colorsByType,

@@ -7,10 +7,7 @@ function createRepository(Model) {
     async findAll({ filter = {}, page = 1, limit = 20, sort = '-createdAt', populate = [] }) {
       const skip = (page - 1) * limit;
 
-      let query = Model.find(filter)
-        .sort(sort)
-        .skip(skip)
-        .limit(limit);
+      let query = Model.find(filter).sort(sort).skip(skip).limit(limit);
 
       populate.forEach((path) => {
         query = query.populate(path);

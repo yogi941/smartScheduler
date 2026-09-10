@@ -111,9 +111,30 @@ async function seedDemoData() {
     // 5. Rooms & Laboratories
     logger.info('Creating Rooms & Labs...');
     const roomsDef = [
-      { roomNumber: 'LH-101', building: 'Academic Block A', floor: 1, capacity: 60, roomType: ROOM_TYPES.CLASSROOM, hasProjector: true },
-      { roomNumber: 'LH-102', building: 'Academic Block A', floor: 1, capacity: 60, roomType: ROOM_TYPES.CLASSROOM, hasProjector: true },
-      { roomNumber: 'LH-103', building: 'Academic Block A', floor: 1, capacity: 60, roomType: ROOM_TYPES.CLASSROOM, hasProjector: false },
+      {
+        roomNumber: 'LH-101',
+        building: 'Academic Block A',
+        floor: 1,
+        capacity: 60,
+        roomType: ROOM_TYPES.CLASSROOM,
+        hasProjector: true,
+      },
+      {
+        roomNumber: 'LH-102',
+        building: 'Academic Block A',
+        floor: 1,
+        capacity: 60,
+        roomType: ROOM_TYPES.CLASSROOM,
+        hasProjector: true,
+      },
+      {
+        roomNumber: 'LH-103',
+        building: 'Academic Block A',
+        floor: 1,
+        capacity: 60,
+        roomType: ROOM_TYPES.CLASSROOM,
+        hasProjector: false,
+      },
     ];
     for (const r of roomsDef) {
       const existing = await Room.findOne({ roomNumber: r.roomNumber });
@@ -125,8 +146,24 @@ async function seedDemoData() {
     }
 
     const labsDef = [
-      { labName: 'Software Systems Lab', labCode: 'LAB-SE1', building: 'Tech Block B', floor: 2, capacity: 60, department: cseDept._id, equipment: ['Linux Workstations', 'Git', 'Docker'] },
-      { labName: 'Database Systems Lab', labCode: 'LAB-DB1', building: 'Tech Block B', floor: 2, capacity: 60, department: cseDept._id, equipment: ['MongoDB', 'PostgreSQL Workstations'] },
+      {
+        labName: 'Software Systems Lab',
+        labCode: 'LAB-SE1',
+        building: 'Tech Block B',
+        floor: 2,
+        capacity: 60,
+        department: cseDept._id,
+        equipment: ['Linux Workstations', 'Git', 'Docker'],
+      },
+      {
+        labName: 'Database Systems Lab',
+        labCode: 'LAB-DB1',
+        building: 'Tech Block B',
+        floor: 2,
+        capacity: 60,
+        department: cseDept._id,
+        equipment: ['MongoDB', 'PostgreSQL Workstations'],
+      },
     ];
     for (const l of labsDef) {
       const existing = await Laboratory.findOne({ labCode: l.labCode });
@@ -140,11 +177,56 @@ async function seedDemoData() {
     // 6. Subjects
     logger.info('Creating Subjects...');
     const subjectsDef = [
-      { name: 'Data Structures & Algorithms', code: 'CS501', department: cseDept._id, semester: sem5._id, credits: 4, subjectType: SUBJECT_TYPES.THEORY, weeklyLectureHours: 3, weeklyLabHours: 0 },
-      { name: 'Operating Systems', code: 'CS502', department: cseDept._id, semester: sem5._id, credits: 4, subjectType: SUBJECT_TYPES.THEORY, weeklyLectureHours: 3, weeklyLabHours: 0 },
-      { name: 'Database Management Systems', code: 'CS503', department: cseDept._id, semester: sem5._id, credits: 4, subjectType: SUBJECT_TYPES.THEORY, weeklyLectureHours: 3, weeklyLabHours: 0 },
-      { name: 'OS Laboratory', code: 'CS504L', department: cseDept._id, semester: sem5._id, credits: 2, subjectType: SUBJECT_TYPES.LAB, weeklyLectureHours: 0, weeklyLabHours: 2 },
-      { name: 'DBMS Laboratory', code: 'CS505L', department: cseDept._id, semester: sem5._id, credits: 2, subjectType: SUBJECT_TYPES.LAB, weeklyLectureHours: 0, weeklyLabHours: 2 },
+      {
+        name: 'Data Structures & Algorithms',
+        code: 'CS501',
+        department: cseDept._id,
+        semester: sem5._id,
+        credits: 4,
+        subjectType: SUBJECT_TYPES.THEORY,
+        weeklyLectureHours: 3,
+        weeklyLabHours: 0,
+      },
+      {
+        name: 'Operating Systems',
+        code: 'CS502',
+        department: cseDept._id,
+        semester: sem5._id,
+        credits: 4,
+        subjectType: SUBJECT_TYPES.THEORY,
+        weeklyLectureHours: 3,
+        weeklyLabHours: 0,
+      },
+      {
+        name: 'Database Management Systems',
+        code: 'CS503',
+        department: cseDept._id,
+        semester: sem5._id,
+        credits: 4,
+        subjectType: SUBJECT_TYPES.THEORY,
+        weeklyLectureHours: 3,
+        weeklyLabHours: 0,
+      },
+      {
+        name: 'OS Laboratory',
+        code: 'CS504L',
+        department: cseDept._id,
+        semester: sem5._id,
+        credits: 2,
+        subjectType: SUBJECT_TYPES.LAB,
+        weeklyLectureHours: 0,
+        weeklyLabHours: 2,
+      },
+      {
+        name: 'DBMS Laboratory',
+        code: 'CS505L',
+        department: cseDept._id,
+        semester: sem5._id,
+        credits: 2,
+        subjectType: SUBJECT_TYPES.LAB,
+        weeklyLectureHours: 0,
+        weeklyLabHours: 2,
+      },
     ];
 
     const createdSubjects = [];
@@ -159,9 +241,27 @@ async function seedDemoData() {
     // 7. Teachers (User + Teacher model)
     logger.info('Creating Teachers...');
     const teachersData = [
-      { name: 'Prof. Alan Turing', email: 'turing@example.com', empId: 'EMP-001', designation: DESIGNATIONS.PROFESSOR, subjects: ['CS501', 'CS502'] },
-      { name: 'Prof. Ada Lovelace', email: 'lovelace@example.com', empId: 'EMP-002', designation: DESIGNATIONS.ASSOCIATE_PROFESSOR, subjects: ['CS503', 'CS505L'] },
-      { name: 'Prof. Grace Hopper', email: 'hopper@example.com', empId: 'EMP-003', designation: DESIGNATIONS.ASSISTANT_PROFESSOR, subjects: ['CS504L', 'CS502'] },
+      {
+        name: 'Prof. Alan Turing',
+        email: 'turing@example.com',
+        empId: 'EMP-001',
+        designation: DESIGNATIONS.PROFESSOR,
+        subjects: ['CS501', 'CS502'],
+      },
+      {
+        name: 'Prof. Ada Lovelace',
+        email: 'lovelace@example.com',
+        empId: 'EMP-002',
+        designation: DESIGNATIONS.ASSOCIATE_PROFESSOR,
+        subjects: ['CS503', 'CS505L'],
+      },
+      {
+        name: 'Prof. Grace Hopper',
+        email: 'hopper@example.com',
+        empId: 'EMP-003',
+        designation: DESIGNATIONS.ASSISTANT_PROFESSOR,
+        subjects: ['CS504L', 'CS502'],
+      },
     ];
 
     for (const t of teachersData) {
@@ -176,7 +276,7 @@ async function seedDemoData() {
         });
       }
 
-      let teacherProf = await Teacher.findOne({ employeeId: t.empId });
+      const teacherProf = await Teacher.findOne({ employeeId: t.empId });
       if (!teacherProf) {
         const matchedSubjectIds = createdSubjects
           .filter((sub) => t.subjects.includes(sub.code))
@@ -197,8 +297,22 @@ async function seedDemoData() {
     // 8. Student Batches
     logger.info('Creating Student Batches...');
     const batchesDef = [
-      { batchName: 'CSE-2024-A', department: cseDept._id, semester: sem5._id, section: 'A', academicYear: '2026-2027', strength: 50 },
-      { batchName: 'CSE-2024-B', department: cseDept._id, semester: sem5._id, section: 'B', academicYear: '2026-2027', strength: 45 },
+      {
+        batchName: 'CSE-2024-A',
+        department: cseDept._id,
+        semester: sem5._id,
+        section: 'A',
+        academicYear: '2026-2027',
+        strength: 50,
+      },
+      {
+        batchName: 'CSE-2024-B',
+        department: cseDept._id,
+        semester: sem5._id,
+        section: 'B',
+        academicYear: '2026-2027',
+        strength: 45,
+      },
     ];
 
     for (const b of batchesDef) {
@@ -221,7 +335,6 @@ async function seedDemoData() {
     logger.info(' - 5 Subjects (3 Theory, 2 Labs)');
     logger.info(' - 3 Faculty Members (Prof. Alan Turing, Prof. Ada Lovelace, Prof. Grace Hopper)');
     logger.info(' - 2 Student Batches (CSE-2024-A, CSE-2024-B)');
-
   } catch (error) {
     logger.error(`Failed to seed demo data: ${error.message}\n${error.stack}`);
     process.exitCode = 1;

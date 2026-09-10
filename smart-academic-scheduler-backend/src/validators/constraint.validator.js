@@ -32,8 +32,14 @@ const createConstraintValidator = [
     .withMessage('appliesTo is required')
     .custom(isValidObjectId)
     .withMessage('appliesTo must be a valid MongoDB ObjectId'),
-  body('day').optional().isIn(WEEK_DAYS).withMessage(`day must be one of: ${WEEK_DAYS.join(', ')}`),
-  body('timeSlot').optional().custom(isValidObjectId).withMessage('timeSlot must be a valid MongoDB ObjectId'),
+  body('day')
+    .optional()
+    .isIn(WEEK_DAYS)
+    .withMessage(`day must be one of: ${WEEK_DAYS.join(', ')}`),
+  body('timeSlot')
+    .optional()
+    .custom(isValidObjectId)
+    .withMessage('timeSlot must be a valid MongoDB ObjectId'),
   body('date').optional().isISO8601().withMessage('date must be a valid ISO8601 date').toDate(),
   body('description')
     .trim()

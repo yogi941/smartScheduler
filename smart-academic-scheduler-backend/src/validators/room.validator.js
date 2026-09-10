@@ -25,7 +25,10 @@ const createRoomValidator = [
     .withMessage('capacity is required')
     .isInt({ min: 1 })
     .withMessage('capacity must be a positive integer'),
-  body('roomType').optional().isIn(ROOM_TYPES).withMessage(`roomType must be one of: ${ROOM_TYPES.join(', ')}`),
+  body('roomType')
+    .optional()
+    .isIn(ROOM_TYPES)
+    .withMessage(`roomType must be one of: ${ROOM_TYPES.join(', ')}`),
   body('hasProjector').optional().isBoolean().withMessage('hasProjector must be a boolean'),
 ];
 

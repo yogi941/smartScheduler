@@ -22,25 +22,11 @@ import TimeSlotsPage from './pages/dashboard/TimeSlotsPage';
 import ConstraintsPage from './pages/dashboard/ConstraintsPage';
 import TimetablesPage from './pages/dashboard/TimetablesPage';
 import UsersPage from './pages/dashboard/UsersPage';
+import AnalyticsPage from './pages/dashboard/AnalyticsPage';
+import AuditLogsPage from './pages/dashboard/AuditLogsPage';
 
 const ADMIN_ROLES = ['ADMIN', 'SUPER_ADMIN'];
 
-/**
- * Route tree layout:
- *   /login, /register           -> PublicOnlyRoute (bounces logged-in users to /dashboard)
- *   /unauthorized                -> plain page, reachable by anyone authenticated
- *   /dashboard/*                 -> ProtectedRoute (requires auth) -> DashboardLayout
- *     /dashboard                 -> role-agnostic home
- *     /dashboard/timetables      -> role-agnostic (Students see published schedules;
- *                                   the generate/publish/archive actions inside the
- *                                   page itself are conditionally rendered for admins)
- *     /dashboard/departments etc -> nested ProtectedRoute with allowedRoles=ADMIN_ROLES
- *
- * NOTE: allowedRoles here is a UX convenience (hides/redirects nav the user
- * can't use); the backend's authorize(...) middleware is the real
- * enforcement boundary and would reject these calls regardless of what
- * the frontend router allows through.
- */
 function App() {
   return (
     <BrowserRouter>
@@ -59,6 +45,7 @@ function App() {
               <Route path="timetables" element={<TimetablesPage />} />
 
               <Route element={<ProtectedRoute allowedRoles={ADMIN_ROLES} />}>
+                <Route path="analytics" element={<AnalyticsPage />} />
                 <Route path="departments" element={<DepartmentsPage />} />
                 <Route path="courses" element={<CoursesPage />} />
                 <Route path="semesters" element={<SemestersPage />} />
@@ -69,6 +56,7 @@ function App() {
                 <Route path="laboratories" element={<LaboratoriesPage />} />
                 <Route path="time-slots" element={<TimeSlotsPage />} />
                 <Route path="constraints" element={<ConstraintsPage />} />
+                <Route path="audit-logs" element={<AuditLogsPage />} />
                 <Route path="users" element={<UsersPage />} />
               </Route>
             </Route>

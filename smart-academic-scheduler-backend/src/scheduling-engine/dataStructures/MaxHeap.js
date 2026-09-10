@@ -52,7 +52,7 @@ class MaxHeap {
 
   _siftDown(startIndex) {
     let index = startIndex;
-    const length = this.heap.length;
+    const { length } = this.heap;
 
     while (true) {
       let largest = index;

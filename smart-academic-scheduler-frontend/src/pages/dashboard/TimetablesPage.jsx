@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
+import useSocket from '../../hooks/useSocket';
 import Button from '../../components/common/Button';
 import Alert from '../../components/common/Alert';
 import Modal from '../../components/common/Modal';
@@ -49,6 +50,22 @@ function TimetablesPage() {
       setIsLoading(false);
     }
   }
+
+  // Real-time Socket listener setup
+  useSocket({
+    TIMETABLE_GENERATED: () => loadTimetables(),
+    TIMETABLE_UPDATED: (data) => {
+      loadTimetables();
+      if (selectedTimetable && (selectedTimetable.id === data.timetableId || selectedTimetable._id === data.timetableId)) {
+        handleViewTimetable(data.timetableId);
+      }
+    },
+    TIMETABLE_PUBLISHED: () => loadTimetables(),
+    TIMETABLE_ROLLED_BACK: (data) => {
+      loadTimetables();
+      if (data.timetableId) handleViewTimetable(data.timetableId);
+    },
+  });
 
   useEffect(() => {
     loadTimetables();
@@ -263,7 +280,10 @@ function TimetablesPage() {
               </Button>
             </div>
           </div>
-          <TimetableGrid timetable={selectedTimetable} />
+          <TimetableGrid
+            timetable={selectedTimetable}
+            onTimetableUpdated={() => handleViewTimetable(selectedTimetable.id || selectedTimetable._id)}
+          />
         </div>
       )}
 
